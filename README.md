@@ -14,3 +14,29 @@ Redis with Spring WebFlux - Tutorial from Vinoth Selvaraj (Udemy)
 5.  Ping 
     -  `ping` -> Response `PONG`    
 
+#####  8. Storing Simple Key Values
+
+Commands:
+-  `set a b`
+    -  a - key
+    -  b - value
+-  `get a`
+    -  `"b"`
+-  `get c`
+    -  `(nil)`
+-  `set a 1`
+-  `get a`
+    -  `"1"` - String
+-  `set ....................bigkey............... somevalue`
+-  `set 1 10` (1 is a key)   
+-  `set true false`             
+Naming best practices:
+-  API `/user/1/name` -> key `user:1:name`   
+-  Spaces in values
+    -  `set somekey some value`
+        -  `(error) ERR syntax error`
+    -  `set somekey "some value"`
+-  Spaces in keys
+    -  `set "some key" somevalue`    
+
+
