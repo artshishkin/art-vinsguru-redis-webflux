@@ -138,6 +138,32 @@ Naming best practices:
 
 [Redis Commands Cheat Sheet](https://cheatography.com/tasjaevan/cheat-sheets/redis/)
 
+#####  19. Hash - Part 1
+
+1.  Set hash
+    -  `hset key field value`
+    -  `hset user:1 name Art age 38 city Kramatorsk`
+2.  Type of Value by Key
+    -  `type user:1`
+        -  `hash`
+3.  Get field value
+    -  `hget user:1 name`    
+4.  Get all fields
+    -  `hgetall user:1`
+        -  `1) "name"`
+        -  `2) "Art"`
+        -  `3) "age"`
+        -  `4) "38"`
+        -  `5) "city"`
+        -  `6) "Kramatorsk"`
+5.  Create another object with different fields
+    -  `hset user:2 name Kate birthYear 1983 status active`
+
+
+
+
+
+
 
 
     
