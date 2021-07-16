@@ -78,7 +78,19 @@ Naming best practices:
     -  `ttl a`
 -  extend TTL
     -  `expire a 60` - set new ttl to 60 seconds    
-        
+-  set expiration time at certain timestamp
+    -  `set a b exat 1626465000`
+    -  `ttl a` -> 269
+-  set expiration time in millis
+    -  `set a b px 30000`
+-  change value but keep ttl
+    -  wrong:
+        -  `set a b ex 60`
+        -  `set a c`
+        -  `ttl a` -> -1 (no expiration - will keep forever)
+    -  correct    
+        -  `set a b ex 60`
+        -  `set a c keepttl`                
     
 
 
