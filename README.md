@@ -112,7 +112,27 @@ Naming best practices:
     -  1 (yes)
     -  0 (no)    
 
+#####  15. INCR / DECR Commands
 
+1.  Increment integer
+    -  `set a 1`
+    -  `incr a` -> ++a
+        -  (integer) 2
+    -  `get a` -> "2"
+    -  `incr non-existing-key` ->
+        -  `(integer) 1`
+2.  Decrement integer        
+    -  `decr a` -> --a
+3.  Increment float
+    -  `set a 1.02`
+    -  `incrbyfloat a .3` -> a+=0.3
+    -  "1.32"
+4.  Decrement float           
+    -  `incrbyfloat a -.3` -> a-=0.3
+5.  Increase by certain value
+    -  `incrby a 123`
+6.  Decrease by certain value
+    -  `decrby a 123`    
 
 
 
