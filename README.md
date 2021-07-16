@@ -103,7 +103,14 @@ Naming best practices:
         -  `OK` if exists
         -  `(nil)` if not
 
-    
+#####  14. Exists Command
+
+-  `exists a` -> 1    
+-  `exists b` -> 0
+-  `set user:1:token token ex 10`
+-  `exists user:1:token`
+    -  1 (yes)
+    -  0 (no)    
 
 
 
