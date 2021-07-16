@@ -58,6 +58,18 @@ Naming best practices:
         -  back to page `"0"`
     -  `scan 0 MATCH user:*:name COUNT 5` - match pattern, limit by count, page 0
 
+#####  10. Removing Keys
+
+1.  Delete one (or list)
+    -  `del key [key ...]`
+    -  `del user:8:name`
+    -  `del user:1:name user:2:name`
+2.  Delete All
+    -  `flushdb`
+
+
+
+
 
 
 
