@@ -91,8 +91,17 @@ Naming best practices:
     -  correct    
         -  `set a b ex 60`
         -  `set a c keepttl`                
-    
 
+#####  13. Set Options - XX/NX
+    
+-  NX - Only set the key if it does not already exist.
+    -  `set a b nx`
+        -  `(nil)` if exists
+        -  `OK` if not exist
+-  XX - Only set the key if it already exist.
+    -  `set a c xx`
+        -  `OK` if exists
+        -  `(nil)` if not
 
     
 
