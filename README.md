@@ -39,4 +39,26 @@ Naming best practices:
 -  Spaces in keys
     -  `set "some key" somevalue`    
 
+#####  9. Accessing All Keys
 
+1.  Keys (deprecated)
+    -  `keys  *` - all the keys
+    -  `keys user:*` - all the keys starting with user
+    -  `keys user:*:name`
+        -  1) "user:2:name"
+        -  2) "user:1:name"
+    -  `keys user:*:nan
+        -  `(empty array)`
+2.  Scan (better solution)
+    -  `scan 0` - all keys from page 0
+        -  it returns reference to the next page - `"6"`
+    -  `scan 6`
+        -  another portion of scan - `"27"`
+    -  `scan 27`
+        -  back to page `"0"`
+    -  `scan 0 MATCH user:*:name COUNT 5` - match pattern, limit by count, page 0
+
+
+
+
+    
