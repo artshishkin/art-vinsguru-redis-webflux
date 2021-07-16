@@ -138,7 +138,7 @@ Naming best practices:
 
 [Redis Commands Cheat Sheet](https://cheatography.com/tasjaevan/cheat-sheets/redis/)
 
-#####  19. Hash - Part 1
+#####  19/20. Hash
 
 1.  Set hash
     -  `hset key field value`
@@ -158,12 +158,21 @@ Naming best practices:
         -  `6) "Kramatorsk"`
 5.  Create another object with different fields
     -  `hset user:2 name Kate birthYear 1983 status active`
-
-
-
-
-
-
+6.  Expire object
+    -  `expire user:2 10`
+7.  Get all keys of hash
+    -  `hkeys user:1`
+        -  `1) "name"`
+        -  `2) "age"`
+        -  `3) "city"`    
+8.  Get all values of hash
+    -  `hvals user:1`
+9.  Does field exist
+    -  `hexists user:1 status`
+10.  Delete field
+    -  `hdel user:1 age`
+11.  Delete entire object
+    -  `del user:1`
 
 
     
