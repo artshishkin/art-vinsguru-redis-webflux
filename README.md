@@ -66,6 +66,23 @@ Naming best practices:
     -  `del user:1:name user:2:name`
 2.  Delete All
     -  `flushdb`
+    
+#####  11. Expiring Keys
+
+-  set expiration in seconds
+    -  `set a b ex 10` - 10 seconds
+    -  `get a` -> `b` -> wait for 10 sec
+    -  `get a` -> `(nil)`
+-  check TTL
+    -  `set a b ex 10` - 10 seconds
+    -  `ttl a`
+-  extend TTL
+    -  `expire a 60` - set new ttl to 60 seconds    
+        
+    
+
+
+    
 
 
 
