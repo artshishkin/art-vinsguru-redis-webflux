@@ -134,7 +134,9 @@ Naming best practices:
 6.  Decrease by certain value
     -  `decrby a 123`    
 
+#####  16. Redis Commands Cheat Sheet Download
 
+[Redis Commands Cheat Sheet](https://cheatography.com/tasjaevan/cheat-sheets/redis/)
 
 
 
