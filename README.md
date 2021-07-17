@@ -209,11 +209,24 @@ Naming best practices:
     -  `lpop a 3`
 4.  Empty list
     -  `lpop a 1000`
-    -                  
+    -  `keys *` - (empty array) - redis deletes keys of empty list                
         
+#####  24. Redis Set
 
-
-
-
+1.  Add items to set
+    -  `sadd users 1 2 3`
+2.  Get size of the set
+    -  `scard users`
+3.  Get members
+    -  `smembers users`
+4.  Check member is present
+    -  `sismember users 3`    
+5.  Remove item from set
+    -  `srem users 5` - only member 5
+    -  `srem users 2 3` - 2 and 3
+6.  Randomly pop member (and remove it from the set)
+    -  `spop users` - 1 member
+    -  `spop users 3` - 3 members
+         
 
     
