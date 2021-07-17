@@ -193,7 +193,23 @@ Naming best practices:
 4.  Remove from list from head
     -  `lpop a` - from left remove 1 and return it
     -  `lpop a 3` - from left remove 3 and return them              
-    
+
+#####  23. List As Stack
+
+1.  Push items
+    -  `rpush a 1 2 3 4 5 6`
+2.  Remove from list from tail
+    -  `rpop a` - from right remove 1 and return it
+    -  `rpop a 3` - from right remove 3 and return them
+        -  `1) "5"`
+        -  `2) "4"`
+        -  `3) "3"`
+3.  **OR** from left-hand side
+    -  `lpush a 1 2 3 4`
+    -  `lpop a 3`
+4.  Empty list
+    -  `lpop a 1000`
+    -                  
         
 
 
