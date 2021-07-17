@@ -174,5 +174,30 @@ Naming best practices:
 11.  Delete entire object
     -  `del user:1`
 
+#####  21. List & Queue
+
+1.  Right-hand side push
+    -  Insert all the specified values at the tail of the list stored at key 
+    -  `rpush a 1`
+    -  `rpush a 2 3 4 5`
+2.  Get list length
+    -  `llen a`
+3.  Get elements from list
+    -  `lrange a 0 3` - from index 0 to index 3 (4 total)
+        -  `1) "1"`
+        -  `2) "2"`
+        -  `3) "3"`
+        -  `4) "4"`
+    -  `lrange a 0 -1` - from index 0 to the end
+    -  `lrange a 0 1000` - from index 0 to 1000 but only existing
+4.  Remove from list from head
+    -  `lpop a` - from left remove 1 and return it
+    -  `lpop a 3` - from left remove 3 and return them              
+    
+        
+
+
+
+
 
     
