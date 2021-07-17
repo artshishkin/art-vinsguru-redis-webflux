@@ -228,5 +228,26 @@ Naming best practices:
     -  `spop users` - 1 member
     -  `spop users 3` - 3 members
          
+#####  25. Set Intersection & Union
 
-    
+1.  Init setup
+    -  `sadd skill:java 1 2 3 4`
+    -  `sadd skill:js 2 3 4 5`
+    -  `sadd skill:aws 4 5 6 7`
+2.  Intersection
+    -  `sinter skill:java skill:js skill:aws`
+3.  Union
+    -  `sunion skill:js skill:aws` 
+4.  Difference
+    -  `sadd candidate:criminal 4 5 6`
+    -  `sdiff skill:java candidate:criminal` - present in skill:java but absent in candidate:criminal
+5.  Store intersection result
+    -  `sinterstore java-js skill:java skill:js`
+6.  Store union result
+    -  `SUNIONSTORE java-or-js skill:java skill:js`    
+7.  Store diff result
+    -  `SDIFFSTORE java-without-criminal skill:java candidate:criminal`
+
+
+
+           
