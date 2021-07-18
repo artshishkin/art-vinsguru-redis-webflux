@@ -248,6 +248,35 @@ Naming best practices:
 7.  Store diff result
     -  `SDIFFSTORE java-without-criminal skill:java candidate:criminal`
 
+#####  28. Sorted Set
+
+1.  Add item
+    -  `zadd products 0 books`
+    -  `zadd products 0 iphone 0 tv`
+2.  Get size
+    -  `zcard products` - cardinality
+3.  Increase score
+    -  `zincrby key increment member`           
+    -  `zincrby products 10 iphone`
+4.  Get sorted products
+    -  `zrange products 0 -1`
+    -  `zrange products 0 -1 withscores`
+5.  Highest scored product
+    -  `zrange products -1 -1`
+    -  **OR**
+    -  `zrange products 0 0 rev`
+    -  `zrange products 0 1 rev` - top 2 products
+6.  Rank of item
+    -  `zrank products tv` - direct order
+    -  `zrevrank products tv` - reverse order
+7.  Remove items from the set
+    -  `zpopmax products` - pop with max score    
+    -  `zpopmax products 3` - pop 3 items with max score    
+    -  `zpopmin products` - pop with min score    
+    -  `zpopmin products 3` - pop 3 items with min score    
 
 
-           
+
+
+
+               
