@@ -276,7 +276,75 @@ Naming best practices:
     -  `zpopmin products 3` - pop 3 items with min score    
 
 
+#####  31. Redis Transaction
+
+1.  Open 2 terminals
+2.  Create balances for users
+    -  `set user:1:balance 1`       
+    -  `set user:2:balance 0`
+3.  Assume 2 API-clients want to transfer balance from user:1 to user:2
+    -  term1: `get user:1:balance` -> 1 (enough)            
+    -  term2: `get user:1:balance` -> 1 (enough)            
+4.  Transfer balance by term1
+    -  `127.0.0.1:6379> decr user:1:balance`
+    -  `(integer) 0`
+    -  `127.0.0.1:6379> incr user:2:balance`
+    -  `(integer) 1`
+5.  Transfer balance by term2
+    -  `127.0.0.1:6379> decr user:1:balance`
+    -  `(integer) -1`
+    -  `127.0.0.1:6379> incr user:2:balance`
+    -  `(integer) 2`
+6.  **INCORRECT** - need a transaction
+7.  Multi
+    -  `multi` - start a transaction
+    -  `127.0.0.1:6379> multi`
+    -  `OK`
+    -  `127.0.0.1:6379(TX)>`   (**TX**)    
+8.  Term1 and Term2
+    -  `127.0.0.1:6379> multi`
+    -  `OK`
+    -  `127.0.0.1:6379(TX)> decr user:1:balance`
+    -  `QUEUED`
+    -  `127.0.0.1:6379(TX)> incr user:2:balance`
+    -  `QUEUED`
+9.  Term1
+    -  `127.0.0.1:6379(TX)> exec`
+    -  `1) (integer) 0`
+    -  `2) (integer) 1`
+10. Term2
+    -  `127.0.0.1:6379(TX)> exec`
+    -  `1) (integer) -1`
+    -  `2) (integer) 2`
+    -  **does not solve our problem**
+11.  Watch key
+    -  `watch user:1:balance user:2:balance`
+12.  Term1 and Term2
+    -  `127.0.0.1:6379> multi`
+    -  `OK`
+    -  `127.0.0.1:6379(TX)> decr user:1:balance`
+    -  `QUEUED`
+    -  `127.0.0.1:6379(TX)> incr user:2:balance`
+    -  `QUEUED`
+13.  Term1
+    -  `127.0.0.1:6379(TX)> exec`
+    -  `1) (integer) 0`
+    -  `2) (integer) 1`
+14.  Term2    
+    -  `127.0.0.1:6379(TX)> exec`
+    -  `(nil)`            
+15.  After `exec` redis will remove watch
+16.  Discard transaction - Rollback
+    -  `127.0.0.1:6379> multi`
+    -  `OK`
+    -  `127.0.0.1:6379(TX)> incr user:2:balance`
+    -  `QUEUED`
+    -  `127.0.0.1:6379(TX)> decr user:1:balance`
+    -  `QUEUED`
+    -  `127.0.0.1:6379(TX)> discard`
+    -  `OK`
+    -  `127.0.0.1:6379>`
 
 
 
-               
+    
