@@ -345,6 +345,20 @@ Naming best practices:
     -  `OK`
     -  `127.0.0.1:6379>`
 
+#####  32. Saving Data On Disk
+
+1.  Working dir
+    -  `/data` - in Docker container
+    -  may be empty
+    -  I have file `dump.rdb`
+        -  `REDIS0009�	redis-ver6.2.4�`
+        -  `redis-bits�@�ctime��%�`�used-mem � �aof-preamble� ���-/=}ւ`    
+2.  Redis periodically saves data
+3.  Enforce saving process
+    -  `bgsave` - Background saving
+
+
+
 
 
     
