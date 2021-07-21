@@ -1,12 +1,9 @@
 package net.shyshkin.study.redis.redisson.test.config;
 
 import org.redisson.Redisson;
-import org.redisson.RedissonReactive;
 import org.redisson.api.RedissonClient;
 import org.redisson.api.RedissonReactiveClient;
-import org.redisson.client.RedisClient;
 import org.redisson.config.Config;
-import org.redisson.config.SingleServerConfig;
 
 import java.util.Objects;
 
@@ -19,6 +16,7 @@ public class RedissonConfig {
     public RedissonClient getClient() {
 
         if (Objects.isNull(redissonClient)) {
+            System.out.println("Creating new Config and Redisson Client");
             Config config = new Config();
             config.useSingleServer()
                     .setAddress(serverUri);
