@@ -1,6 +1,5 @@
 package net.shyshkin.study.redis.redisson.test;
 
-import com.github.javafaker.Faker;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.redisson.api.RBucketReactive;
@@ -17,8 +16,6 @@ import static org.assertj.core.data.Percentage.withPercentage;
 
 @Slf4j
 public class Lec01KeyValueTest extends BaseTest {
-
-    private static final Faker FAKER = Faker.instance();
 
     @Test
     void keyValueAccessTest() {

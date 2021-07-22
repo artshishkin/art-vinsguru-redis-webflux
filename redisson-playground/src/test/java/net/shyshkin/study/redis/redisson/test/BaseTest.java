@@ -1,5 +1,6 @@
 package net.shyshkin.study.redis.redisson.test;
 
+import com.github.javafaker.Faker;
 import net.shyshkin.study.redis.redisson.test.config.RedissonConfig;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -11,6 +12,7 @@ public class BaseTest {
 
     protected RedissonReactiveClient client;
     private final RedissonConfig redissonConfig = new RedissonConfig();
+    protected static final Faker FAKER = Faker.instance();
 
     @BeforeAll
     void setClient() {
