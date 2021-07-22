@@ -371,8 +371,14 @@ Before and after implementing String Serializer
 
 #####  43. Object Store
 
+-  With Serializable
 ```shell script
 127.0.0.1:6379> get student:1
 "\x04\x04\t>2net.shyshkin.study.redis.redisson.test.dto.Student\xa10E\xa5h\x85\x10C\x00\x00\x00\x03>\x03age#\x00>\x04city\x16\x00>\x04name\x16\x00\x16\x00\x00\x00\x17>\x0bAmeliamouth>\rBreana Kohler"
+```
+-  With JsonJacksonCodec and class name
+```shell script
+127.0.0.1:6379> get student:1
+"{\"@class\":\"net.shyshkin.study.redis.redisson.test.dto.Student\",\"age\":20,\"city\":\"Kunzeshire\",\"name\":\"Saran Mayer\"}"
 ```
     

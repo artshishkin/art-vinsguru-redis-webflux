@@ -5,15 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Data
-public class Student implements Serializable {
-
-    private static final long serialVersionUID = -6831884057995571133L;
+public class Student {
 
     private String name;
     private int age;

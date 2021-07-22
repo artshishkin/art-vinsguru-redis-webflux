@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.shyshkin.study.redis.redisson.test.dto.Student;
 import org.junit.jupiter.api.Test;
 import org.redisson.api.RBucketReactive;
+import org.redisson.codec.JsonJacksonCodec;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
@@ -23,7 +24,7 @@ public class Lec02KeyValueObjectTest extends BaseTest {
                 .city(FAKER.address().city())
                 .build();
 
-        RBucketReactive<Student> bucket = client.getBucket("student:1");
+        RBucketReactive<Student> bucket = client.getBucket("student:1", JsonJacksonCodec.INSTANCE);
 
         //when
         Mono<Void> set = bucket.set(student);
