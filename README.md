@@ -386,4 +386,15 @@ Before and after implementing String Serializer
 127.0.0.1:6379> get student:1
 "{\"age\":19,\"city\":\"Treutelport\",\"marks\":[5,6,12],\"name\":\"Cindy Koss\"}"
 ```
+
+#####  47. Expired Event Listener
+
+-  [Enable notification via configuration](https://redis.io/topics/notifications#configuration)
+-  method 1 (redis cli):
+    -  `config set notify-keyspace-events AKE`
+-  method 2 (`redis.conf` - bind mount)
+-  method 3 (own Dockerfile for own image with COPY option (immutable))   
+
+
+
     
