@@ -357,8 +357,17 @@ Naming best practices:
 3.  Enforce saving process
     -  `bgsave` - Background saving
 
+####  Section 4: Redisson - Crash Course
 
+#####  41. Redisson Codec
 
+Before and after implementing String Serializer
+```
+127.0.0.1:6379> get user:1:name
+"\x04>\x03Art"
+127.0.0.1:6379> get user:1:name
+"Art"
+```
 
 
     
