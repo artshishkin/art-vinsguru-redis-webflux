@@ -2,6 +2,7 @@ package net.shyshkin.study.redis.redisson.test;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.redisson.api.DeletedObjectListener;
 import org.redisson.api.ExpiredObjectListener;
 import org.redisson.api.RBucketReactive;
 import org.redisson.client.codec.StringCodec;
@@ -65,5 +66,48 @@ public class Lec05EventListenerTest extends BaseTest {
 
         assertThat(completeDuration).isCloseTo(ofMillis(800), ofMillis(300));
         assertThat(keyIsExpired).isTrue();
+    }
+
+    @Test
+    void deletedEventTest() {
+
+        //given
+        RBucketReactive<String> bucket = client.getBucket("user:1:name", StringCodec.INSTANCE);
+        String userName = FAKER.name().firstName();
+        AtomicBoolean keyIsDeleted = new AtomicBoolean(false);
+
+        //when
+        Mono<Void> set = bucket.set(userName);
+        Mono<String> get = bucket.get()
+                .doOnNext(name -> log.info("User name: {}", name))
+                .doFinally(signalType -> log.info("Finally: {}", signalType));
+
+        Mono<Boolean> delete = bucket.delete();
+
+        Mono<Void> event = bucket
+                .addListener((DeletedObjectListener) name -> {
+                    log.info("Deleted object: {}", name);
+                    keyIsDeleted.set(true);
+                })
+                .then();
+
+        Mono<String> pipeline = set
+                .concatWith(event)
+
+                .then(get)
+
+                .then(Mono.delay(ofMillis(200)))
+                .then(delete)
+
+                .then(Mono.delay(ofMillis(200)))
+                .then(get);
+
+        //then
+        Duration completeDuration = StepVerifier
+                .create(pipeline)
+                .verifyComplete();
+
+        assertThat(completeDuration).isCloseTo(ofMillis(400), ofMillis(200));
+        assertThat(keyIsDeleted).isTrue();
     }
 }
