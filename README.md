@@ -381,4 +381,9 @@ Before and after implementing String Serializer
 127.0.0.1:6379> get student:1
 "{\"@class\":\"net.shyshkin.study.redis.redisson.test.dto.Student\",\"age\":20,\"city\":\"Kunzeshire\",\"name\":\"Saran Mayer\"}"
 ```
+-  With JsonJacksonCodec and without class name
+```shell script
+127.0.0.1:6379> get student:1
+"{\"age\":19,\"city\":\"Treutelport\",\"marks\":[5,6,12],\"name\":\"Cindy Koss\"}"
+```
     

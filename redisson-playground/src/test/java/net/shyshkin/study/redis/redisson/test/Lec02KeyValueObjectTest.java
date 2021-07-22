@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.shyshkin.study.redis.redisson.test.dto.Student;
 import org.junit.jupiter.api.Test;
 import org.redisson.api.RBucketReactive;
-import org.redisson.codec.JsonJacksonCodec;
+import org.redisson.codec.TypedJsonJacksonCodec;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
@@ -22,9 +22,12 @@ public class Lec02KeyValueObjectTest extends BaseTest {
                 .name(FAKER.name().name())
                 .age(FAKER.random().nextInt(18, 23))
                 .city(FAKER.address().city())
+                .mark(5)
+                .mark(6)
+                .mark(12)
                 .build();
 
-        RBucketReactive<Student> bucket = client.getBucket("student:1", JsonJacksonCodec.INSTANCE);
+        RBucketReactive<Student> bucket = client.getBucket("student:1", new TypedJsonJacksonCodec(Student.class));
 
         //when
         Mono<Void> set = bucket.set(student);
