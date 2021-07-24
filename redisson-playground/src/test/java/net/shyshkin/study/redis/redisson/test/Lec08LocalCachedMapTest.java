@@ -24,7 +24,7 @@ public class Lec08LocalCachedMapTest extends BaseTest {
         redissonClient = new RedissonConfig().getClient();
 
         LocalCachedMapOptions<Integer, Student> mapOptions = LocalCachedMapOptions.<Integer, Student>defaults()
-                .syncStrategy(LocalCachedMapOptions.SyncStrategy.UPDATE)
+                .syncStrategy(LocalCachedMapOptions.SyncStrategy.NONE)
                 .reconnectionStrategy(LocalCachedMapOptions.ReconnectionStrategy.NONE);
 
         studentsMap = redissonClient.getLocalCachedMap(

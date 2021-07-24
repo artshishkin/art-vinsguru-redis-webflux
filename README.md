@@ -395,7 +395,7 @@ Before and after implementing String Serializer
 -  method 2 (`redis.conf` - bind mount)
 -  method 3 (own Dockerfile for own image with COPY option (immutable))   
 
-##### 53. Local Cached Map - Sync Strategy UPDATE
+##### 53.1. Local Cached Map - Sync Strategy UPDATE
 
 - Test if server is running
     -  `telnet localhost 6379`
@@ -416,5 +416,18 @@ Before and after implementing String Serializer
     -  Up Redis server again
     -  Run server3
         -  All the data for server1 should change
+
+##### 53.2. Local Cached Map - Sync Strategy NONE
+
+-  Test pipeline
+    -  Start `docker-compose`
+    -  Run `server1`
+        -  View name `Art`
+    -  Run `server2`
+        -  View name in server1 still `Art` - NO UPDATE HAPPENED
+    -  View in redis-cli
+        -  `hgetall students`
+        -  View `Art-updated`       
+
 
     
