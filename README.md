@@ -429,5 +429,22 @@ Before and after implementing String Serializer
         -  `hgetall students`
         -  View `Art-updated`       
 
+##### 53.3. Local Cached Map - Reconnection Strategy - CLEAR 
+
+-  Test pipeline
+    -  Start `docker-compose`
+    -  Run `server1`
+        -  View name `Art`
+    -  Run `server2`
+        -  View name in server1 still `Art` - NO UPDATE HAPPENED
+    -  View in redis-cli
+        -  `hgetall students`
+        -  View `Art-updated`
+    -  Stop redis server
+    -  Restart redis server
+        -  In server1 - Student is null
+    -  Run server3
+        -  In server1 Updated all the fields                   
+
 
     

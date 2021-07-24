@@ -25,7 +25,7 @@ public class Lec08LocalCachedMapTest extends BaseTest {
 
         LocalCachedMapOptions<Integer, Student> mapOptions = LocalCachedMapOptions.<Integer, Student>defaults()
                 .syncStrategy(LocalCachedMapOptions.SyncStrategy.NONE)
-                .reconnectionStrategy(LocalCachedMapOptions.ReconnectionStrategy.NONE);
+                .reconnectionStrategy(LocalCachedMapOptions.ReconnectionStrategy.CLEAR);
 
         studentsMap = redissonClient.getLocalCachedMap(
                 "students",
@@ -47,7 +47,6 @@ public class Lec08LocalCachedMapTest extends BaseTest {
                 .subscribe();
 
         //then
-        log.info("When we start server2 then name of student should change");
         Thread.sleep(600000);
     }
 
@@ -60,7 +59,7 @@ public class Lec08LocalCachedMapTest extends BaseTest {
         studentsMap.put(1, student);
 
         //then
-        log.info("Name for server1 should change too");
+        log.info("Name changed");
     }
 
     @Test
