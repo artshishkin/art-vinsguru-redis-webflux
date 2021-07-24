@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 @Slf4j
-public class Lec12PubSubTest extends BaseTest {
+public class Lec12_1_PubSubTest extends BaseTest {
 
     @Test
     void subscriber1() {
