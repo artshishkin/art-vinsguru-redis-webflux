@@ -446,5 +446,11 @@ Before and after implementing String Serializer
     -  Run server3
         -  In server1 Updated all the fields                   
 
+#####  59. Pub Sub
 
+-  Start subscribers
+-  Publish through code by `topic.publish`
+-  Publish through `redis-cli`
+    -  `publish slack-room hi`
+    -  `publish slack-room "how are you"`
     
