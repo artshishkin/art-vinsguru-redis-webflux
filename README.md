@@ -395,6 +395,26 @@ Before and after implementing String Serializer
 -  method 2 (`redis.conf` - bind mount)
 -  method 3 (own Dockerfile for own image with COPY option (immutable))   
 
+##### 53. Local Cached Map - Sync Strategy UPDATE
 
+- Test if server is running
+    -  `telnet localhost 6379`
+        -  `Trying 127.0.0.1...`
+        -  `Connected to localhost.`
+        -  `Escape character is '^]'.`    
+-  Test pipeline
+    -  Start `docker-compose`
+    -  Run `server1`
+        -  View name `Art`
+    -  Run `server2`
+        -  View name `Art-updated`
+    -  Down `docker-compose` (stop Redis server)
+        -  View server2 logs continue emitting cached data
+        -  `telnet localhost 6379` (in ubuntu)        
+            -  `Trying 127.0.0.1...`
+            -  `telnet: Unable to connect to remote host: Connection refused`
+    -  Up Redis server again
+    -  Run server3
+        -  All the data for server1 should change
 
     
