@@ -13,10 +13,13 @@ import reactor.test.StepVerifier;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static net.shyshkin.study.redis.redisson.assignment.UserRank.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
 public class Lec16AssignmentTest extends BaseTest {
@@ -120,6 +123,31 @@ public class Lec16AssignmentTest extends BaseTest {
 
         //then
         Thread.sleep(600_000);
+    }
+
+    @Test
+    void timeOrderTest() {
+        //given
+        AtomicReference<LocalDateTime> timeReference = new AtomicReference<>(LocalDateTime.now().minus(1, ChronoUnit.MINUTES));
+        Mono<Void> insertion = Flux.range(1, 100)
+                .map(i -> orderRandom(PRIME))
+                .flatMap(priorityQueue::add)
+                .then();
+
+        //when
+        StepVerifier.create(insertion)
+                .verifyComplete();
+
+        //then
+        StepVerifier.create(priorityQueue.pollFirst(Integer.MAX_VALUE))
+                .thenConsumeWhile(
+                        order -> true,
+                        order -> {
+                            assertThat(order.getDate()).isAfter(timeReference.get());
+                            timeReference.set(order.getDate());
+                        }
+                )
+                .verifyComplete();
     }
 
     private Order order(UserRank rank, String product, int amount) {

@@ -49,7 +49,7 @@ public class OrderPriorityQueue {
                 .flatMapIterable(Function.identity());
     }
 
-    public Flux<Order> takeItems(){
+    public Flux<Order> takeItems() {
         return sortedSet
                 .takeFirstElements()
                 .limitRate(1);
@@ -60,6 +60,6 @@ public class OrderPriorityQueue {
     }
 
     private double getScore(Order order) {
-        return order.getRank().ordinal();
+        return order.getRank().ordinal() + Double.parseDouble("0." + System.nanoTime());
     }
 }
