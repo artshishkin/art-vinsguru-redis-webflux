@@ -2,6 +2,7 @@ package net.shyshkin.study.redis.redisspring.fib.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -75,5 +76,43 @@ class FibServiceTest {
 
         log.debug("Fibonacci calculation for user {} and index {} takes {}", username, index, duration);
         if (!Objects.equals("art", username)) assertThat(duration).isLessThan(Duration.ofSeconds(1));
+    }
+
+    @Test
+    void cacheEvictTest() {
+
+        //given
+        int index = 43;
+        long expectedResult = 433494437;
+
+        Mono<Long> fibResult = Mono.fromSupplier(() -> fibService.getFib(index, "art"));
+        Duration duration = StepVerifier
+                .create(fibResult)
+                .expectNext(expectedResult)
+                .verifyComplete();
+        log.debug("Duration of fibonacci for {} is {}", index, duration);
+
+        duration = StepVerifier
+                .create(fibResult)
+                .expectNext(expectedResult)
+                .verifyComplete();
+        log.debug("Duration of fibonacci for {} SECOND call is {}", index, duration);
+
+        assertThat(duration).isLessThan(Duration.ofSeconds(1));
+
+        //when
+        Mono<Void> clearCache = Mono
+                .fromRunnable(() -> fibService.clearCache(index));
+        StepVerifier.create(clearCache)
+                .verifyComplete();
+        log.debug("Cache evicted for {}", index);
+
+        //then
+        duration = StepVerifier.create(fibResult)
+                .expectNext(expectedResult)
+                .verifyComplete();
+
+        log.debug("Duration of fibonacci for {} after Cache Evict is {}", index, duration);
+        assertThat(duration).isGreaterThan(Duration.ofSeconds(2));
     }
 }
