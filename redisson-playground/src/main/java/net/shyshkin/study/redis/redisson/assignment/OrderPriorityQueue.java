@@ -49,6 +49,12 @@ public class OrderPriorityQueue {
                 .flatMapIterable(Function.identity());
     }
 
+    public Flux<Order> takeItems(){
+        return sortedSet
+                .takeFirstElements()
+                .limitRate(1);
+    }
+
     public Mono<Integer> size() {
         return sortedSet.size();
     }
