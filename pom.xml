@@ -11,6 +11,7 @@
 
     <modules>
         <module>redisson-playground</module>
+        <module>redis-spring</module>
     </modules>
 
     <properties>
