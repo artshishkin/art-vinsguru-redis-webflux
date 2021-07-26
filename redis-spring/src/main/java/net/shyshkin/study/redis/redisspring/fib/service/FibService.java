@@ -8,9 +8,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class FibService {
 
-    @Cacheable("math:fib")
-    public long getFib(int index) {
-        log.debug("Calculating fib for {}", index);
+//    @Cacheable(value = "math:fib", key = "#p0")
+    @Cacheable(value = "math:fib", key = "#index")
+    public long getFib(int index, String name) {
+        log.debug("Calculating fib for {} and user {}", index, name);
         return fib(index);
     }
 

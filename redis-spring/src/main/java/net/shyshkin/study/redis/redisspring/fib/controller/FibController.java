@@ -15,8 +15,8 @@ public class FibController {
 
     private final FibService fibService;
 
-    @GetMapping("{index}")
-    public Mono<Long> getFib(@PathVariable int index) {
-        return Mono.fromSupplier(() -> fibService.getFib(index));
+    @GetMapping("{index}/{name}")
+    public Mono<Long> getFib(@PathVariable int index, @PathVariable String name) {
+        return Mono.fromSupplier(() -> fibService.getFib(index, name));
     }
 }
