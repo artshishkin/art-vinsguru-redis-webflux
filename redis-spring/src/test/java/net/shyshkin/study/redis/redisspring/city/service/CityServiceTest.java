@@ -57,43 +57,4 @@ class CityServiceTest {
         log.debug("Second call of external service took {}", duration);
         assertThat(duration).isLessThan(Duration.ofMillis(200));
     }
-
-    @Test
-    void getCityInfoFast() {
-        //given
-        String zipcode = "00603";
-
-        //when
-        Mono<City> cityInfo = cityService
-                .getCityInfoFast(zipcode)
-                .doOnNext(city -> log.debug("Retrieved city from external service: {}", city));
-
-        Duration duration = StepVerifier.create(cityInfo)
-                .thenConsumeWhile(
-                        city -> true,
-                        city -> assertThat(city)
-                                .hasNoNullFieldsOrProperties()
-                                .hasFieldOrPropertyWithValue("zipcode", zipcode)
-                                .hasFieldOrPropertyWithValue("city", "Aguadilla")
-                                .hasFieldOrPropertyWithValue("stateName", "Puerto Rico")
-                )
-                .verifyComplete();
-
-        log.debug("First call of external service took {}", duration);
-
-        //then
-        duration = StepVerifier.create(cityInfo)
-                .thenConsumeWhile(
-                        city -> true,
-                        city -> assertThat(city)
-                                .hasNoNullFieldsOrProperties()
-                                .hasFieldOrPropertyWithValue("zipcode", zipcode)
-                                .hasFieldOrPropertyWithValue("city", "Aguadilla")
-                                .hasFieldOrPropertyWithValue("stateName", "Puerto Rico")
-                )
-                .verifyComplete();
-
-        log.debug("Second call of external service took {}", duration);
-        assertThat(duration).isLessThan(Duration.ofMillis(200));
-    }
 }

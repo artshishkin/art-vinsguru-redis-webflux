@@ -25,19 +25,7 @@ public class CityService {
                 .switchIfEmpty(askExternalServiceAndCache(zipcode));
     }
 
-    public Mono<City> getCityInfoFast(String zipcode) {
-        return cityMap
-                .get(zipcode)
-                .switchIfEmpty(askExternalServiceAndFastCache(zipcode));
-    }
-
     private Mono<City> askExternalServiceAndCache(String zipcode) {
-        return cityClient
-                .getCityInfo(zipcode)
-                .flatMap(city -> cityMap.put(zipcode, city));
-    }
-
-    private Mono<City> askExternalServiceAndFastCache(String zipcode) {
         return cityClient
                 .getCityInfo(zipcode)
                 .flatMap(city -> cityMap
