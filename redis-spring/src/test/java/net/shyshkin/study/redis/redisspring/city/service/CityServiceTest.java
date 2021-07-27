@@ -40,15 +40,16 @@ class CityServiceTest {
         log.debug("Second call of external service took {} (retrieve cached value)", duration);
         assertThat(duration).isLessThan(Duration.ofMillis(200));
 
+        //Expiration switched off - view previous commits for testing expiration
         //wait expiration
-        Thread.sleep(2100);
-        duration = externalServiceCall(zipcode);
-
-        log.debug("Third call of external service took {} (after cache has been expired)", duration);
-        assertThat(duration).isGreaterThan(Duration.ofSeconds(1));
-
-        //wait for redisson__timeout__set:{city:info} in Redis server to be cleared by Redisson
-        Thread.sleep(5000);
+//        Thread.sleep(2100);
+//        duration = externalServiceCall(zipcode);
+//
+//        log.debug("Third call of external service took {} (after cache has been expired)", duration);
+//        assertThat(duration).isGreaterThan(Duration.ofSeconds(1));
+//
+//        //wait for redisson__timeout__set:{city:info} in Redis server to be cleared by Redisson
+//        Thread.sleep(5000);
     }
 
     private Duration externalServiceCall(String zipcode) {
