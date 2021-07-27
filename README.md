@@ -453,4 +453,16 @@ Before and after implementing String Serializer
 -  Publish through `redis-cli`
     -  `publish slack-room hi`
     -  `publish slack-room "how are you"`
+
+####  Section 5: Spring WebFlux Caching
+
+#####  80. City Service - App - Download
+
+Start service in Java VM
+-  `java -jar city-api.jar`
+-  `http://localhost:3030/open-city-api/{zipcode}`
+-  `zipcode` from us.json
+-  `http://localhost:3030/open-city-api/00603`
+
+
     
