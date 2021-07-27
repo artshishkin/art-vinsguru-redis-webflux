@@ -3,6 +3,7 @@ package net.shyshkin.study.redis.redisspring.fib.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -21,6 +22,12 @@ public class FibService {
     @CacheEvict(value = "math:fib", key = "#index")
     public void clearCache(int index) {
         log.debug("Clearing cache for {}", index);
+    }
+
+    @Scheduled(fixedRate = 10_000)
+    @CacheEvict(value = "math:fib", allEntries = true)
+    public void clearCache() {
+        log.debug("Clearing all the cache (scheduled)");
     }
 
     //intentional 2^N - worst algorithm - for study
