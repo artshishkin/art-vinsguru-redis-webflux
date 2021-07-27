@@ -34,15 +34,7 @@ public class CityService {
     public Mono<City> getCityInfo(String zipcode) {
         return cityMap
                 .get(zipcode)
-                .switchIfEmpty(askExternalServiceAndCache(zipcode));
-    }
-
-    private Mono<City> askExternalServiceAndCache(String zipcode) {
-        return cityClient
-                .getCityInfo(zipcode)
-                .flatMap(city -> cityMap
-                        .fastPut(zipcode, city, ttlValue, ttlUnit)
-                        .thenReturn(city));
+                .onErrorResume(ex -> cityClient.getCityInfo(zipcode));
     }
 
     @Scheduled(fixedRate = 10_000)
@@ -50,11 +42,11 @@ public class CityService {
 
         cityClient
                 .getAllCitiesInfo()
-                .flatMap(city -> cityMap.fastPut(city.getZipcode(), city, ttlValue, ttlUnit))
-                .filter(res -> res)
-                .count()
+                .collectMap(City::getZipcode)
+                .doOnNext(citiesMap -> log.debug("Trying to update cache of {} cities", citiesMap.size()))
+                .flatMap(cityMap::putAll)
                 .subscribe(
-                        citiesCount -> log.debug("{} updated successfully", citiesCount),
+                        null,
                         ex -> log.error("Error", ex),
                         () -> log.debug("Cache updated successfully")
                 );
