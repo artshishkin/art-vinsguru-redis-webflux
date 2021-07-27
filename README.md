@@ -464,5 +464,7 @@ Start service in Java VM
 -  `zipcode` from us.json
 -  `http://localhost:3030/open-city-api/00603`
 
-
+Create Docker image
+-  `docker build -t artarkatesoft/art-vinsguru-city-api:latest .`
+-  `docker push artarkatesoft/art-vinsguru-city-api`
     
