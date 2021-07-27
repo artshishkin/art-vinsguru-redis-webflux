@@ -24,7 +24,7 @@ public class FibService {
         log.debug("Clearing cache for {}", index);
     }
 
-    @Scheduled(fixedRate = 10_000)
+    @Scheduled(fixedRate = 30_000)
     @CacheEvict(value = "math:fib", allEntries = true)
     public void clearCache() {
         log.debug("Clearing all the cache (scheduled)");
