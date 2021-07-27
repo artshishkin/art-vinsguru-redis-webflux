@@ -2,3 +2,4 @@ logging:
   level:
     net.shyshkin: debug
 app.weather.update.period: 10000
+app.city.server.uri: http://localhost:3030/open-city-api
