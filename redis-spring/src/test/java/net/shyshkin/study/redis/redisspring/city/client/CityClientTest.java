@@ -5,10 +5,12 @@ import net.shyshkin.study.redis.redisspring.city.dto.City;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import java.time.Duration;
+import java.util.concurrent.atomic.AtomicLong;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -40,5 +42,27 @@ class CityClientTest {
                 .verifyComplete();
 
         log.debug("Duration of city info call: {}", duration);
+    }
+
+    @Test
+    void getAllCitiesInfo() {
+
+        //when
+        Flux<City> citiesInfo = cityClient
+                .getAllCitiesInfo();
+
+        //then
+        AtomicLong counter = new AtomicLong(0);
+        Duration duration = StepVerifier.create(citiesInfo)
+                .thenConsumeWhile(
+                        city -> true,
+                        city -> assertThat(city)
+                                .hasNoNullFieldsOrProperties()
+                                .satisfies(c -> counter.incrementAndGet())
+                )
+                .verifyComplete();
+        long citiesCount = counter.get();
+        log.debug("Duration of {} cities info call: {}", citiesCount, duration);
+        assertThat(citiesCount).isGreaterThan(10);
     }
 }
