@@ -19,7 +19,7 @@ public class WeatherService {
         return 0;
     }
 
-    @Scheduled(fixedRate = 10_000)
+    @Scheduled(fixedRateString = "${app.weather.update.period:10_000}")
     public void update() {
         IntStream
                 .rangeClosed(1, 5)
