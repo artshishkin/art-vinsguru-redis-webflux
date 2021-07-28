@@ -467,4 +467,11 @@ Start service in Java VM
 Create Docker image
 -  `docker build -t artarkatesoft/art-vinsguru-city-api:latest .`
 -  `docker push artarkatesoft/art-vinsguru-city-api`
+
+#### Section 6: Spring WebFlux & Redis : Performance
+
+#####  95. JMeter Set Up
+
+-  Download [JMeter](https://jmeter.apache.org/download_jmeter.cgi)
+-  Download [product-service.jmx](redis-performance/src/test/resources/jmeter/product-service.jmx)
     
