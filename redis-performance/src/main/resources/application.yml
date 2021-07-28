@@ -1,0 +1,10 @@
+spring.r2dbc:
+  url: r2dbc:postgresql://localhost:25432/product_db
+  username: postgres
+  password: postgres
+
+app.sql.init-file: classpath:schema.sql
+
+logging:
+  level:
+    net.shyshkin: debug
