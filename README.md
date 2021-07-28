@@ -474,4 +474,18 @@ Create Docker image
 
 -  Download [JMeter](https://jmeter.apache.org/download_jmeter.cgi)
 -  Download [product-service.jmx](redis-performance/src/test/resources/jmeter/product-service.jmx)
+
+#####  96. JMeter - A Short Crash Course
+
+-  Run `<jmeter_dir>/bin/jmeter.bat` (for Windows) 
+```
+Don't use GUI mode for load testing !, only for Test creation and Test debugging.
+For load testing, use CLI Mode (was NON GUI):
+   jmeter -n -t [jmx file] -l [results file] -e -o [Path to web report folder]
+```
+-  Open `product-service.jmx`
+-  Disable `View Results Tree`
+-  Run Tests for 60 seconds for Warm Up Server
+-  Modify Tests to run for 300 seconds
+-  Save and close
     
