@@ -500,5 +500,23 @@ For load testing, use CLI Mode (was NON GUI):
     -  Test Plan -> (RightMouseClick / Edit) -> Add -> Listener -> Aggregate Report ->
     -  `Write results to file / Read from file` -> Browse -> v1.jtl 
 
+#####  105. Product Service - V3 - Demo
 
+-  Package project
+    -  `mvn clean package -DskipTests`
+-  Start instance 1
+    -  `java -jar ./target/redis-performance-0.0.1-SNAPSHOT.jar`    
+-  Start instance 2
+    -  `java -jar ./target/redis-performance-0.0.1-SNAPSHOT.jar --server.port=8081`
+-  **or** by configuring IntelliJ IDEA 
+    -  Copy configuration from RedisPerformanceApplication
+    -  Program Arguments: `--server.port=8081`
+
+
+
+
+    
+    
+    
+           
     
