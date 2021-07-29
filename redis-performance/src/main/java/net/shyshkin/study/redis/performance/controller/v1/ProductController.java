@@ -1,17 +1,20 @@
-package net.shyshkin.study.redis.performance.controller;
+package net.shyshkin.study.redis.performance.controller.v1;
 
-import lombok.RequiredArgsConstructor;
 import net.shyshkin.study.redis.performance.entity.Product;
 import net.shyshkin.study.redis.performance.service.ProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("products")
-@RequiredArgsConstructor
+@RequestMapping("v1/products")
 public class ProductController {
 
     private final ProductService service;
+
+    public ProductController(@Qualifier("directDBCallProductService") ProductService service) {
+        this.service = service;
+    }
 
     @GetMapping("{id}")
     public Mono<Product> getProduct(@PathVariable int id) {

@@ -1,4 +1,4 @@
-package net.shyshkin.study.redis.performance.controller;
+package net.shyshkin.study.redis.performance.controller.v1;
 
 import lombok.extern.slf4j.Slf4j;
 import net.shyshkin.study.redis.performance.entity.Product;
@@ -37,7 +37,7 @@ class ProductControllerTest {
                 .timeout(5, TimeUnit.SECONDS)
                 .untilAsserted(() ->
                         webTestClient.get()
-                                .uri("/products/{id}", id)
+                                .uri("/v1/products/{id}", id)
                                 .exchange()
 
                                 //then
@@ -61,7 +61,7 @@ class ProductControllerTest {
                 .untilAsserted(() ->
 
                         webTestClient.put()
-                                .uri("/products/{id}", id)
+                                .uri("/v1/products/{id}", id)
                                 .bodyValue(productToUpdate)
                                 .exchange()
 
