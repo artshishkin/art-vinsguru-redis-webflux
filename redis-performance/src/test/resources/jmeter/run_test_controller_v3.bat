@@ -1,0 +1,1 @@
+c:\Users\Admin\Downloads\apache-jmeter-5.4.1\bin\jmeter.bat -n -t product-service-controller-v3.jmx -l results/controller-v3.jtl
