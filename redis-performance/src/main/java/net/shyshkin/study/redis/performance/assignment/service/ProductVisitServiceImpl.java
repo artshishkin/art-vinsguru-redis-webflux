@@ -32,7 +32,6 @@ public class ProductVisitServiceImpl implements ProductVisitService {
                 .entryRangeReversed(0, limit - 1)
                 .flatMapIterable(Function.identity())
                 .map(ScoredEntry::getValue)
-                .log()
                 .flatMap(productService::getProductById)
                 .collectList();
     }
