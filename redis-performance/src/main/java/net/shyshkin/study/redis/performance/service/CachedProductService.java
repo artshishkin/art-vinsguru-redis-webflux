@@ -2,7 +2,7 @@ package net.shyshkin.study.redis.performance.service;
 
 import lombok.RequiredArgsConstructor;
 import net.shyshkin.study.redis.performance.entity.Product;
-import net.shyshkin.study.redis.performance.service.util.ProductCacheTemplate;
+import net.shyshkin.study.redis.performance.service.util.CacheTemplate;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono;
 @Service
 public class CachedProductService implements ProductService {
 
-    private final ProductCacheTemplate cacheTemplate;
+    private final CacheTemplate<Integer, Product> cacheTemplate;
 
     @Override
     public Mono<Product> getProductById(int id) {
