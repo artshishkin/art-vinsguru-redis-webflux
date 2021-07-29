@@ -5,10 +5,12 @@ import net.shyshkin.study.redis.performance.repository.ProductRepository;
 import org.redisson.api.RMapReactive;
 import org.redisson.api.RedissonReactiveClient;
 import org.redisson.codec.TypedJsonJacksonCodec;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 @Service
+@Primary
 public class ProductCacheTemplate extends CacheTemplate<Integer, Product> {
 
     private final ProductRepository repository;

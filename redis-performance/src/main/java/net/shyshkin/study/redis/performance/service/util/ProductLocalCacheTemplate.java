@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 @Service
-@Primary
+//@Primary
 public class ProductLocalCacheTemplate extends CacheTemplate<Integer, Product> {
 
     private final ProductRepository repository;
