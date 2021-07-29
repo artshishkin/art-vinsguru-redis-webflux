@@ -33,3 +33,5 @@ build/
 .vscode/
 
 node_modules/
+/redis-performance/src/test/resources/jmeter/jmeter.log
+/redis-performance/src/test/resources/jmeter/results/*.jtl

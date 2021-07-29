@@ -1,0 +1,1 @@
+c:\Users\Admin\Downloads\apache-jmeter-5.4.1\bin\jmeter.bat -n -t product-service.jmx -l results/v1.jtl

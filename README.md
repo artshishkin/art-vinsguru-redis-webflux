@@ -488,4 +488,17 @@ For load testing, use CLI Mode (was NON GUI):
 -  Run Tests for 60 seconds for Warm Up Server
 -  Modify Tests to run for 300 seconds
 -  Save and close
+
+#####  97. Baseline Test
+
+-  Start Test
+    -  `jmeter.bat -n -t product-service.jmx -l results/v1.jtl`
+    -  **or**
+    -  `run_test.bat`
+-  When test finished open result in GUI
+    -  `jmeter.bat`
+    -  Test Plan -> (RightMouseClick / Edit) -> Add -> Listener -> Aggregate Report ->
+    -  `Write results to file / Read from file` -> Browse -> v1.jtl 
+
+
     
