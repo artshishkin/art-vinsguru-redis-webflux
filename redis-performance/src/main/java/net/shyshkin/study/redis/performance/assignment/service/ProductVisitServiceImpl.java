@@ -5,7 +5,6 @@ import net.shyshkin.study.redis.performance.service.ProductService;
 import org.redisson.api.RScoredSortedSetReactive;
 import org.redisson.api.RedissonReactiveClient;
 import org.redisson.client.codec.IntegerCodec;
-import org.redisson.client.protocol.ScoredEntry;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -29,10 +28,9 @@ public class ProductVisitServiceImpl implements ProductVisitService {
     @Override
     public Mono<List<Product>> getTopProducts(int limit) {
         return topProducts
-                .entryRangeReversed(0, limit - 1)
+                .valueRangeReversed(0, limit - 1)
                 .flatMapIterable(Function.identity())
-                .map(ScoredEntry::getValue)
-                .flatMap(productService::getProductById)
+                .flatMapSequential(productService::getProductById)
                 .collectList();
     }
 
