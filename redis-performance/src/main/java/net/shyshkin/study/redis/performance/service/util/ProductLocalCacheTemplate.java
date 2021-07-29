@@ -6,7 +6,6 @@ import org.redisson.api.LocalCachedMapOptions;
 import org.redisson.api.RLocalCachedMap;
 import org.redisson.api.RedissonClient;
 import org.redisson.codec.TypedJsonJacksonCodec;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -39,7 +38,16 @@ public class ProductLocalCacheTemplate extends CacheTemplate<Integer, Product> {
 
     @Override
     protected Mono<Product> getFromCache(Integer id) {
-        return Mono.justOrEmpty(cache.get(id)); //no need supplier because we have map locally
+//        return Mono.justOrEmpty(cache.get(id)); //no need supplier because we have map locally
+        return Mono
+                .create(sink -> cache
+                        .getAsync(id)
+                        .thenAccept(b -> sink.success())
+                        .exceptionally(ex -> {
+                            sink.error(ex);
+                            return null;
+                        })
+                );
     }
 
     @Override
