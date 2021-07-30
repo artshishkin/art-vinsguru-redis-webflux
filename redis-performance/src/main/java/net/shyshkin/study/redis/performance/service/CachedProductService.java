@@ -11,10 +11,12 @@ import reactor.core.publisher.Mono;
 public class CachedProductService implements ProductService {
 
     private final CacheTemplate<Integer, Product> cacheTemplate;
+    private final VinsProductVisitService productVisitService;
 
     @Override
     public Mono<Product> getProductById(int id) {
-        return cacheTemplate.get(id);
+        return cacheTemplate.get(id)
+                .doFirst(() -> productVisitService.addVisit(id));
     }
 
     @Override

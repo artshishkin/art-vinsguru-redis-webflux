@@ -41,6 +41,10 @@ public class VinsProductVisitService {
                 .subscribe();
     }
 
+    public void addVisit(int visitId) {
+        idSink.tryEmitNext(visitId);
+    }
+
     private Mono<Void> updateBatch(List<Integer> idList) {
         RBatchReactive batch = client.createBatch(BatchOptions.defaults());
         String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
@@ -49,12 +53,11 @@ public class VinsProductVisitService {
         Map<Integer, Integer> idCount = idList.stream()
                 .collect(Collectors.toMap(Function.identity(), i -> 1, Integer::sum));
 
-        Flux
+        return Flux
                 .fromIterable(idCount.entrySet())
-                .doOnNext(entry -> topProductsSet.addScore(entry.getKey(), entry.getValue()))
-                .subscribe();
-
-        return batch.execute().then();
+                .map(entry -> topProductsSet.addScore(entry.getKey(), entry.getValue()))
+                .then(batch.execute())
+                .then();
     }
 
 }
