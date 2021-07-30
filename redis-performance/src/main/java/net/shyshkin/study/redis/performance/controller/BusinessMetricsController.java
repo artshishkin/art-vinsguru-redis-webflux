@@ -11,7 +11,7 @@ import reactor.core.publisher.Flux;
 import java.time.Duration;
 import java.util.Map;
 
-@RestController
+@RestController("vinsBusinessMetricsController")
 @RequestMapping("business/metrics")
 @RequiredArgsConstructor
 public class BusinessMetricsController {
