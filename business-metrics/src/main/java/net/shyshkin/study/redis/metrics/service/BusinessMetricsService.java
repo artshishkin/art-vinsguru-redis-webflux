@@ -1,4 +1,4 @@
-package net.shyshkin.study.redis.performance.service;
+package net.shyshkin.study.redis.metrics.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

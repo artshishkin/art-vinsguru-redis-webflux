@@ -13,6 +13,7 @@
         <module>redisson-playground</module>
         <module>redis-spring</module>
         <module>redis-performance</module>
+        <module>business-metrics</module>
     </modules>
 
     <properties>

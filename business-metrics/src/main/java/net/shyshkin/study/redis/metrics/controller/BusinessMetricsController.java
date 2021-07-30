@@ -1,7 +1,7 @@
-package net.shyshkin.study.redis.performance.controller;
+package net.shyshkin.study.redis.metrics.controller;
 
 import lombok.RequiredArgsConstructor;
-import net.shyshkin.study.redis.performance.service.BusinessMetricsService;
+import net.shyshkin.study.redis.metrics.service.BusinessMetricsService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
