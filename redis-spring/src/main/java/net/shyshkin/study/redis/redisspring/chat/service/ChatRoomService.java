@@ -9,8 +9,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.socket.WebSocketHandler;
 import org.springframework.web.reactive.socket.WebSocketMessage;
 import org.springframework.web.reactive.socket.WebSocketSession;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.net.URI;
 
 @Slf4j
 @Service
@@ -22,7 +26,7 @@ public class ChatRoomService implements WebSocketHandler {
     @Override
     public Mono<Void> handle(WebSocketSession webSocketSession) {
 
-        String room = "dummy";
+        String room = getChatRoomName(webSocketSession);
 
         RTopicReactive topic = this.redissonClient.getTopic(room, StringCodec.INSTANCE);
 
@@ -43,5 +47,14 @@ public class ChatRoomService implements WebSocketHandler {
         Mono<Void> send = webSocketSession.send(publisher);
 
         return subscribe.then(send);
+    }
+
+    private String getChatRoomName(WebSocketSession socketSession) {
+        URI uri = socketSession.getHandshakeInfo().getUri();
+        UriComponents uriComponents = UriComponentsBuilder.fromUri(uri).build();
+        return uriComponents
+                .getQueryParams()
+                .toSingleValueMap()
+                .getOrDefault("room", "all-together");
     }
 }
