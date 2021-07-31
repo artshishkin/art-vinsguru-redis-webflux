@@ -5,7 +5,6 @@ import org.redisson.api.RBatchReactive;
 import org.redisson.api.RScoredSortedSetReactive;
 import org.redisson.api.RedissonReactiveClient;
 import org.redisson.client.codec.IntegerCodec;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -21,14 +20,14 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
-public class VinsProductVisitService {
+public class ProductVisitService {
 
-    @Autowired
-    private RedissonReactiveClient client;
+    private final RedissonReactiveClient client;
 
     private Sinks.Many<Integer> idSink;
 
-    public VinsProductVisitService() {
+    public ProductVisitService(RedissonReactiveClient client) {
+        this.client = client;
         this.idSink = Sinks.many().unicast().onBackpressureBuffer();
     }
 
