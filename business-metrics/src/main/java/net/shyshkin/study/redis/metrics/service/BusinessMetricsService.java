@@ -37,6 +37,7 @@ public class BusinessMetricsService {
                 .flatMapIterable(Function.identity())
                 .flatMapSequential(se -> productsMap
                         .get(se.getValue())
+                        .switchIfEmpty(Mono.fromSupplier(() -> Product.builder().id(se.getValue()).description("NOT PRESENT IN PRODUCTS CACHE").build()))
                         .map(pr -> new ScoredEntry<>(se.getScore(), pr)))
                 .collectMap(ScoredEntry::getValue, ScoredEntry::getScore, LinkedHashMap::new);
     }
