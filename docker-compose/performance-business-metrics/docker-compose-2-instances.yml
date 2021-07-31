@@ -32,7 +32,7 @@ services:
   redis-performance-1:
     image: artarkatesoft/redis-study-redis-performance
     environment:
-      SPRING_PROFILES_ACTIVE: local-cache
+#      SPRING_PROFILES_ACTIVE: local-cache
       SPRING_REDIS_HOST: redis
       SPRING_R2DBC_URL: r2dbc:postgresql://postgres:5432/product_db
     ports:
@@ -41,7 +41,7 @@ services:
   redis-performance-2:
     image: artarkatesoft/redis-study-redis-performance
     environment:
-      SPRING_PROFILES_ACTIVE: local-cache
+#      SPRING_PROFILES_ACTIVE: local-cache
       SPRING_REDIS_HOST: redis
       SPRING_R2DBC_URL: r2dbc:postgresql://postgres:5432/product_db
     ports:
