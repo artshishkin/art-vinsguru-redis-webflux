@@ -512,7 +512,11 @@ For load testing, use CLI Mode (was NON GUI):
     -  Copy configuration from RedisPerformanceApplication
     -  Program Arguments: `--server.port=8081`
 
+####  Section 8: Chat Application With WebSocket
 
+#####  116. WebSocket Test Client
+
+-  Smart Websocket Client (Chrome plugin)
 
 
     

@@ -37,6 +37,7 @@ public class ChatRoomService implements WebSocketHandler {
                 .doOnError(thr -> log.error("Error", thr))
                 .doFinally(st -> log.debug("Subscriber finally: {}", st))
                 .then();
+        subscribe.subscribe();
 
         //publisher
         Flux<WebSocketMessage> publisher = topic.getMessages(String.class)
@@ -46,7 +47,8 @@ public class ChatRoomService implements WebSocketHandler {
 
         Mono<Void> send = webSocketSession.send(publisher);
 
-        return subscribe.then(send);
+//        return subscribe.then(send);
+        return send;
     }
 
     private String getChatRoomName(WebSocketSession socketSession) {
