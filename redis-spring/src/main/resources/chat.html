@@ -41,7 +41,7 @@
        Show this div only when start button is pressed.
     -->
 
-    <div id="chat-div">
+    <div id="chat-div" class="invisible">
 
         <!-- All chat messages will be appended here -->
 
@@ -67,8 +67,24 @@
 
 <script>
 
+    //will be executed after pressing the start button
+    const chatFunction = () => {
 
-    // TO-DO
+        const nameInput = document.getElementById("name");
+        const roomInput = document.getElementById("room");
+        const historyText = document.getElementById("history");
+        const messageInput = document.getElementById("message");
+        const sendButton = document.getElementById("send");
+        const chatDiv = document.getElementById("chat-div");
+        const startControl = document.getElementById("start-control");
+
+        chatDiv.classList.remove("invisible");
+        startControl.classList.add("invisible");
+
+
+    }
+
+    document.getElementById("start").addEventListener("click", chatFunction);
 
 
 </script>
