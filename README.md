@@ -518,8 +518,38 @@ For load testing, use CLI Mode (was NON GUI):
 
 -  Smart Websocket Client (Chrome plugin)
 
+####  Section 9: Redis Authentication
 
-    
+#####  125. Access Control List - Introduction
+
+-  `acl list` - show current users
+    -  `1) "user default on nopass ~* &* +@all"`
+-  `acl whoami` - current user
+    -  `"default"`
+-  `acl setuser [username]>[password]` - creates a user with a password 
+    -  **space** before secret is not allowed
+        -  `127.0.0.1:6379> acl setuser art > secret`
+        -  `(error) ERR Error in ACL SETUSER modifier 'secret': Syntax error`
+        -  `127.0.0.1:6379> acl setuser art >secret`
+        -  `OK`
+    -  `acl list`
+        -  `1) "user art off #2bb80d537b1da3e38bd30361aa855686bde0eacd7162fef6a25fe97bf527a25b &* -@all"`
+        -  `2) "user default on nopass ~* &* +@all"`      
+    -  by default new user is **not enabled**
+    -  `acl deluser art`
+    -  `acl setuser art >pass123 on` - enabled      
+-  `acl setuser [username] nopass` - creates a user with no password    
+-  `acl setuser [username] on` - enables the user
+-  `acl setuser [username] off` - disables the user    
+    -  `acl setuser art off`    
+-  `acl deluser [username]` - removes the user
+-  Authenticate    
+    -  `auth art pass123`
+    -  `OK`
+    -  `127.0.0.1:6379> acl whoami`
+    -  `(error) NOPERM this user has no permissions to run the 'acl' command or its subcommand`
+    -  art **has NO permissions** yet
+    -  `auth default nopass` - log in as default user    
     
     
            
