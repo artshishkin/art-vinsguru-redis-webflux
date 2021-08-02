@@ -70,8 +70,8 @@
     //will be executed after pressing the start button
     const chatFunction = () => {
 
-        const nameInput = document.getElementById("name");
-        const roomInput = document.getElementById("room");
+        const name = document.getElementById("name").value;
+        const room = document.getElementById("room").value;
         const historyText = document.getElementById("history");
         const messageInput = document.getElementById("message");
         const sendButton = document.getElementById("send");
@@ -81,6 +81,40 @@
         chatDiv.classList.remove("invisible");
         startControl.classList.add("invisible");
 
+        // const uri=`ws://localhost:8080/chat?room=some-name`;
+        const uri = `ws://${window.location.hostname}:${window.location.port}/chat?room=${room}`;
+
+        const websocket = new WebSocket(uri);
+
+        //onmessage
+        //onopen
+        //onclose
+        /*
+            {
+                "sender": ...
+                "message": ...
+                "date": ...
+            }
+        */
+
+        websocket.onmessage = (evt) => {
+            let obj = JSON.parse(evt.data);
+            let ele = document.createElement("p");
+            ele.innerHTML = `<b>${obj.sender}:</b>&nbsp; ${obj.message}`;
+            historyText.appendChild(ele);
+        }
+
+        websocket.onopen = (evt) => {
+            let ele = document.createElement("p");
+            ele.innerHTML = `<b>CONNECTED</b>`;
+            historyText.appendChild(ele);
+        }
+
+        websocket.onclose = (evt) => {
+            let ele = document.createElement("p");
+            ele.innerHTML = `<b>DISCONNECTED</b>`;
+            historyText.appendChild(ele);
+        }
 
     }
 
