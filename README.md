@@ -550,7 +550,71 @@ For load testing, use CLI Mode (was NON GUI):
     -  `(error) NOPERM this user has no permissions to run the 'acl' command or its subcommand`
     -  art **has NO permissions** yet
     -  `auth default nopass` - log in as default user    
+
+#####  126. Access Control List - Setting Up Permissions    
+
+| command | description |
+|  :---  | --- |
+| `allcommands / +@all` | access to all the commands in redis |
+| `-get,-set...` | no access to get/set commands |
+| `+@set, +@hash, +@list` | access set and hash related commands |
+| `allkeys / ~*` | access to the keys in redis |
+| `~numbers:*` | access to the keys starting with **numbers:** |      
+
+-  `acl setuser art >pass123 on allcommands allkeys`
+    -  `127.0.0.1:6379> acl list`
+    -  `1) "user art on #9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c ~* &* +@all"`
+    -  `2) "user default on nopass ~* &* +@all"`
+    -  `auth art pass123`
+    -  `acl list` 
+        - art: `user art on #9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c ~* &* +@all`
+        -  `acl setuser art -set`
+        -  `user art on #9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c ~* &* +@all -set"`
+        -  `set a b`
+            -  `(error) NOPERM this user has no permissions to run the 'set' command or its subcommand`
+        -  `rpush users 1 2 3` -> (integer) 3
+-  `acl setuser art -@dangerous`
+    -  `flushdb` -> `(error) NOPERM this user has no permissions to run the 'flushdb' command or its subcommand`
     
     
-           
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
     
