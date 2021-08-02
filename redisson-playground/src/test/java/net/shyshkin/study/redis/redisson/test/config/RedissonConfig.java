@@ -21,7 +21,9 @@ public class RedissonConfig {
             log.info("Creating new Config and Redisson Client");
             Config config = new Config();
             config.useSingleServer()
-                    .setAddress(serverUri);
+                    .setAddress(serverUri)
+                    .setUsername("art")
+                    .setPassword("pass123");
             redissonClient = Redisson.create(config);
         }
         return redissonClient;
