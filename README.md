@@ -588,7 +588,10 @@ For load testing, use CLI Mode (was NON GUI):
 -  to come back to default behaviour:
     -  `config set requirepass ""`
 
+#####  130. Redis Configuration
 
+-  [Documentation](https://redis.io/topics/config)
+-  [config file](https://raw.githubusercontent.com/redis/redis/6.0/redis.conf)
 
 
 
