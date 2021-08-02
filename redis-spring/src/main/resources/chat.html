@@ -116,6 +116,17 @@
             historyText.appendChild(ele);
         }
 
+        const sendMessage = () => {
+            let obj = {
+                sender: name,
+                message: messageInput.value
+            }
+            messageInput.value = "";
+            websocket.send(JSON.stringify(obj));
+        }
+
+        sendButton.addEventListener(`click`, sendMessage);
+
     }
 
     document.getElementById("start").addEventListener("click", chatFunction);
