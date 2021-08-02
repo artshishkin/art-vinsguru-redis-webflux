@@ -576,10 +576,17 @@ For load testing, use CLI Mode (was NON GUI):
 -  `acl setuser art -@dangerous`
     -  `flushdb` -> `(error) NOPERM this user has no permissions to run the 'flushdb' command or its subcommand`
     
-    
-    
+#####  129. Redis Default User Credentials
 
-
+-  `config set requirepass pass98765`    
+-  `auth default nopass`
+    -  `(error) WRONGPASS invalid username-password pair or user is disabled.`
+-  exit redis-cli and reenter it
+    -  `127.0.0.1:6379> keys *`
+    -  `(error) NOAUTH Authentication required.`
+-  `auth default pass98765`
+-  to come back to default behaviour:
+    -  `config set requirepass ""`
 
 
 
