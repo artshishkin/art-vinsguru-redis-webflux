@@ -2,6 +2,7 @@ package net.shyshkin.study.redis.redisspring.chat.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RListReactive;
 import org.redisson.api.RTopicReactive;
 import org.redisson.api.RedissonReactiveClient;
 import org.redisson.client.codec.StringCodec;
@@ -29,18 +30,23 @@ public class ChatRoomService implements WebSocketHandler {
         String room = getChatRoomName(webSocketSession);
 
         RTopicReactive topic = this.redissonClient.getTopic(room, StringCodec.INSTANCE);
+        RListReactive<String> history = this.redissonClient.getList("history:" + room, StringCodec.INSTANCE);
 
         //subscribe
         Mono<Void> subscribe = webSocketSession.receive()
                 .map(WebSocketMessage::getPayloadAsText)
-                .flatMap(topic::publish)
+                .flatMap(msg -> history.add(msg).then(topic.publish(msg)))
                 .doOnError(thr -> log.error("Error", thr))
                 .doFinally(st -> log.debug("Subscriber finally: {}", st))
                 .then();
         subscribe.subscribe();
 
         //publisher
-        Flux<WebSocketMessage> publisher = topic.getMessages(String.class)
+        Flux<String> historyMessages = history.iterator();
+        Flux<String> topicMessages = topic.getMessages(String.class);
+
+        Flux<WebSocketMessage> publisher = topicMessages
+                .startWith(historyMessages)
                 .map(webSocketSession::textMessage)
                 .doOnError(thr -> log.error("Error", thr))
                 .doFinally(st -> log.debug("Publisher finally: {}", st));
