@@ -26,6 +26,10 @@
             <div class="col">
                 <input type="text" class="form-control" placeholder="Enter the zip code" id='zip'>
             </div>
+            <div class="col row">
+                <label class="col-md-6" for='radius'>Search Radius (km):</label>
+                <input class="col-md-6" type="number" class="form-control" placeholder="Enter the search radius" value="10" id='radius'>
+            </div>
             <div class="col">
                 <button type="button" class="btn btn-primary form-control" id='search'>Search</button>
             </div>
@@ -50,9 +54,16 @@
             center: uluru,
         });
 
+        let markers = [];
+
         const updateMap = async () => {
+
+            deleteMarkers();
+
             const zip = document.getElementById('zip').value;
-            const uri = `http://${window.location.hostname}:${window.location.port}/geo/${zip}`;
+            const radius = document.getElementById('radius').value;
+
+            const uri = `http://${window.location.hostname}:${window.location.port}/geo/${zip}?radius=${radius}`;
 
             const response = await fetch(uri);
             const arr = await response.json();
@@ -67,14 +78,39 @@
                 });
 
                 arr.forEach(r => {
-                    new google.maps.Marker({
+                    const marker = new google.maps.Marker({
                         position: {lat: r.latitude, lng: r.longitude},
                         map: map,
                         title: r.name
                     });
+                    markers.push(marker);
                 });
             }
         }
+
+        // Sets the map on all markers in the array.
+        function setMapOnAll(map) {
+            for (let i = 0; i < markers.length; i++) {
+                markers[i].setMap(map);
+            }
+        }
+
+        // Removes the markers from the map, but keeps them in the array.
+        function hideMarkers() {
+            setMapOnAll(null);
+        }
+
+        // Shows any markers currently in the array.
+        function showMarkers() {
+            setMapOnAll(map);
+        }
+
+        // Deletes all markers in the array by removing references to them.
+        function deleteMarkers() {
+            hideMarkers();
+            markers = [];
+        }
+
 
         document.getElementById('search').addEventListener('click', updateMap);
     }

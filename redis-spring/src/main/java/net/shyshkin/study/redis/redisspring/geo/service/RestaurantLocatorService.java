@@ -22,11 +22,15 @@ public class RestaurantLocatorService {
     private final RMapReactive<String, GeoLocation> map;
 
     public Flux<Restaurant> getRestaurants(final String zipcode) {
+        return getRestaurants(zipcode, 10);
+    }
+
+    public Flux<Restaurant> getRestaurants(final String zipcode, final int radius) {
         return map
                 .get(zipcode)
                 .map(gl -> GeoSearchArgs
                         .from(gl.getLongitude(), gl.getLatitude())
-                        .radius(10, GeoUnit.KILOMETERS)
+                        .radius(radius, GeoUnit.KILOMETERS)
                 )
                 .flatMap(geo::search)
                 .flatMapIterable(Function.identity())
