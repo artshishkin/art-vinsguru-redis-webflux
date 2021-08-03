@@ -49,18 +49,34 @@
             zoom: 4,
             center: uluru,
         });
-        // The marker, positioned at Uluru
-        const marker = new google.maps.Marker({
-            position: uluru,
-            map: map,
-        });
 
-        const updateMap = () => {
+        const updateMap = async () => {
             const zip = document.getElementById('zip').value;
             const uri = `http://${window.location.hostname}:${window.location.port}/geo/${zip}`;
 
+            const response = await fetch(uri);
+            const arr = await response.json();
+
+            if (arr.length > 0) {
+
+                map.zoom = 10;
+
+                map.setCenter({
+                    lat: arr[0].latitude,
+                    lng: arr[0].longitude
+                });
+
+                arr.forEach(r => {
+                    new google.maps.Marker({
+                        position: {lat: r.latitude, lng: r.longitude},
+                        map: map,
+                        title: r.name
+                    });
+                });
+            }
         }
 
+        document.getElementById('search').addEventListener('click', updateMap);
     }
 
 
