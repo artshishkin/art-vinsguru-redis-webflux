@@ -60,8 +60,7 @@ class CityServiceTest {
                 .doOnNext(city -> log.debug("Retrieved city from external service: {}", city));
 
         return StepVerifier.create(cityInfo)
-                .thenConsumeWhile(
-                        city -> true,
+                .assertNext(
                         city -> assertThat(city)
                                 .hasNoNullFieldsOrProperties()
                                 .hasFieldOrPropertyWithValue("zipcode", zipcode)

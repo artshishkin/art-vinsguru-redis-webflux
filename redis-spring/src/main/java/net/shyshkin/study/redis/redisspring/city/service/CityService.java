@@ -34,11 +34,18 @@ public class CityService {
     public Mono<City> getCityInfo(String zipcode) {
         return cityMap
                 .get(zipcode)
+                .switchIfEmpty(cityClient
+                        .getCityInfo(zipcode)
+                        .flatMap(city -> cityMap
+                                .fastPut(city.getZipcode(), city)
+                                .thenReturn(city)))
                 .onErrorResume(ex -> cityClient.getCityInfo(zipcode));
     }
 
     @Scheduled(fixedRate = 10_000)
     public void updateCache() {
+
+        log.debug("Started update cache");
 
         cityClient
                 .getAllCitiesInfo()

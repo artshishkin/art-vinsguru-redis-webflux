@@ -40,6 +40,8 @@ class CityServiceTest {
         log.debug("Second call of external service took {} (retrieve cached value)", duration);
         assertThat(duration).isLessThan(Duration.ofMillis(200));
 
+        Thread.sleep(5_000);
+
         //Expiration switched off - view previous commits for testing expiration
         //wait expiration
 //        Thread.sleep(2100);
@@ -58,8 +60,7 @@ class CityServiceTest {
                 .doOnNext(city -> log.debug("Retrieved city from external service: {}", city));
 
         return StepVerifier.create(cityInfo)
-                .thenConsumeWhile(
-                        city -> true,
+                .assertNext(
                         city -> assertThat(city)
                                 .hasNoNullFieldsOrProperties()
                                 .hasFieldOrPropertyWithValue("zipcode", zipcode)
