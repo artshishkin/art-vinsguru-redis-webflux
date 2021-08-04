@@ -593,7 +593,12 @@ For load testing, use CLI Mode (was NON GUI):
 -  [Documentation](https://redis.io/topics/config)
 -  [config file](https://raw.githubusercontent.com/redis/redis/6.0/redis.conf)
 
+#####  Spring Data Redis Credentials
 
+1.  Set default user password
+    -  `config set requirepass pass98765`
+2.  Create user art
+    -  `acl setuser art >pass123 on allcommands allkeys -@dangerous`    
 
 
 

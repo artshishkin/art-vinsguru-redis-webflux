@@ -8,3 +8,8 @@ app.sql.init-file: classpath:schema.sql
 logging:
   level:
     net.shyshkin: debug
+
+spring:
+  redis:
+    username: art
+    password: pass123
