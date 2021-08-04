@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+    <!------------------------------------------------------->
+
+    <title>Restaurant Locator</title>
+
+</head>
+<body style="background-color: #E5E7E9;">
+
+<div class="container mt-5">
+    <h2>Restaurant Locator</h2>
+
+    <form>
+        <!-- Enter zip and click search ------>
+        <div class="row">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Enter the zip code" id='zip'>
+            </div>
+            <div class="col row">
+                <label class="col-md-6" for='radius'>Search Radius (km):</label>
+                <input class="col-md-6" type="number" class="form-control" placeholder="Enter the search radius" value="10" id='radius'>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-primary form-control" id='search'>Search</button>
+            </div>
+        </div>
+    </form>
+
+    <!--The div element for the map -->
+    <div id="map" class="mt-5" style="height: 400px; width: 100%"></div>
+
+</div>
+
+
+<script type="text/javascript">
+
+    // Initialize and add the map
+    function initMap() {
+        // The location of Uluru
+        const uluru = {lat: -25.344, lng: 131.036};
+        // The map, centered at Uluru
+        const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 4,
+            center: uluru,
+        });
+
+        let markers = [];
+
+        const updateMap = async () => {
+
+            deleteMarkers();
+
+            const zip = document.getElementById('zip').value;
+            const radius = document.getElementById('radius').value;
+
+            const uri = `http://${window.location.hostname}:${window.location.port}/geo/${zip}?radius=${radius}`;
+
+            const response = await fetch(uri);
+            const arr = await response.json();
+
+            if (arr.length > 0) {
+
+                map.zoom = 10;
+
+                map.setCenter({
+                    lat: arr[0].latitude,
+                    lng: arr[0].longitude
+                });
+
+                arr.forEach(r => {
+                    const marker = new google.maps.Marker({
+                        position: {lat: r.latitude, lng: r.longitude},
+                        map: map,
+                        title: r.name
+                    });
+                    markers.push(marker);
+                });
+            }
+        }
+
+        // Sets the map on all markers in the array.
+        function setMapOnAll(map) {
+            for (let i = 0; i < markers.length; i++) {
+                markers[i].setMap(map);
+            }
+        }
+
+        // Removes the markers from the map, but keeps them in the array.
+        function hideMarkers() {
+            setMapOnAll(null);
+        }
+
+        // Shows any markers currently in the array.
+        function showMarkers() {
+            setMapOnAll(map);
+        }
+
+        // Deletes all markers in the array by removing references to them.
+        function deleteMarkers() {
+            hideMarkers();
+            markers = [];
+        }
+
+
+        document.getElementById('search').addEventListener('click', updateMap);
+    }
+
+
+</script>
+
+<!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+<script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&libraries=&v=weekly&channel=2"
+        async
+></script>
+
+<!------------------------------------------------------->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+</html>
