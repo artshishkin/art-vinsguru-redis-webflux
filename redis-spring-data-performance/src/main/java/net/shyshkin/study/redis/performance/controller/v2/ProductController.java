@@ -1,0 +1,34 @@
+package net.shyshkin.study.redis.performance.controller.v2;
+
+import net.shyshkin.study.redis.performance.entity.Product;
+import net.shyshkin.study.redis.performance.service.ProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
+
+@RestController("productControllerV2")
+@RequestMapping("v2/products")
+public class ProductController {
+
+    private final ProductService service;
+
+    public ProductController(@Qualifier("cachedProductService") ProductService service) {
+        this.service = service;
+    }
+
+    @GetMapping("{id}")
+    public Mono<Product> getProduct(@PathVariable int id) {
+        return service.getProductById(id);
+    }
+
+    @PutMapping("{id}")
+    public Mono<Product> updateProduct(@PathVariable int id, @RequestBody Mono<Product> productMono) {
+        return service.updateProduct(id, productMono);
+    }
+
+    @DeleteMapping("{id}")
+    public Mono<Void> deleteProduct(@PathVariable int id) {
+        return service.deleteProduct(id);
+    }
+
+}

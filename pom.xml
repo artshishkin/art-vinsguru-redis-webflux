@@ -15,6 +15,7 @@
         <module>redis-performance</module>
         <module>business-metrics</module>
         <module>redis-spring-data</module>
+        <module>redis-spring-data-performance</module>
     </modules>
 
     <properties>
