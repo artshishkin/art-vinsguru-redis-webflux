@@ -35,5 +35,5 @@ build/
 node_modules/
 /redis-performance/src/test/resources/jmeter/jmeter.log
 /redis-performance/src/test/resources/jmeter/results/*.jtl
-!**/jmeter.log
-!**/jmeter/results/*.jtl
+/redis-spring-data-performance/src/test/resources/jmeter/jmeter.log
+/redis-spring-data-performance/src/test/resources/jmeter/results/*.jtl

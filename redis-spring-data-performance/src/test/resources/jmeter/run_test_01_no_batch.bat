@@ -1,0 +1,1 @@
+c:\Users\Admin\Downloads\apache-jmeter-5.4.1\bin\jmeter.bat -n -t product-service-01-no-batch.jmx -l results/01-no-batch.jtl
